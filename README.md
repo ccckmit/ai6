@@ -1,58 +1,35 @@
-# f6 -- ES6 Front-End Framework
+# AI6 -- Artificial Intelligence Library (based on j6)
+
+AI6 is a collection of algorithm for Optimization, Machine-Learning, Neural-Network.
+
+AI6 based on Scientific Computing Library [j6](https://github.com/ccckmit/j6) . 
 
 ## Install
 
 For node.js 
 
 ```
-$ npm install f6
+$ npm install ai6
 ```
 
-For browser, download the [f6.js](web/f6.js) file and link into your html.
+## Module in AI6
 
+AI6 is a collection of algorithm for Optimization, Machine-Learning, Neural-Network.
 
-## Demo
-
-```
-$ git clone https://github.com/ccckmit/f6.git
-$ cd f6
-$ npm install --dev
-$ npm start
-```
-
-The server started at `http://localhost:3000/` , visiting the following page for demo program.
-
-* [Example 1 : DOM](web/ex1-dom/) :  `http://localhost:3000/ex1-dom/main.html`
-* [Example 2 : router](web/ex2-router/) :  `http://localhost:3000/ex2-router/main.html`
-* [Example 3 : blogInClient](web/ex3-blogInClient/) :  `http://localhost:3000/ex3-blogInClient/main.html`
-
-For the other demo, you should start the server inside the subfolder
-
-```
-$ cd web/ex4-blogInServer
-$ node server
-```
-
-* [Example 4 : blogInServer](web/ex4-blogInServer/) :  `http://localhost:3000/
-
-```
-$ cd web/ex5-blogInAjax
-$ node server
-```
-
-* [Example 5 : blogInAjax](web/ex5-blogInAjax/) :  `http://localhost:3000/ex5-blogInAjax/main.html`
-
-
-```
-$ cd web/ex6-upload
-$ node server
-```
-
-* [Example 6 : upload](web/ex6-upload/) :  `http://localhost:3000/ex6-upload/upload.html`
-
-```
-$ cd web/ex7-uploadAjax
-$ node server
-```
-
-* [Example 7 : uploadAjax](web/ex7-uploadAjax/) :  `http://localhost:3000/ex7-uploadAjax/upload.html`
+1. Optimization
+    * Hill-Climbing Algorithm
+    * Simulated-Annealing Algorithm
+    * Genetic Algorithm
+2. Machine Learning
+    * KNN (K Nearest Neighbors - Classification)
+    * KMean (Clustering)
+    * SVM (Support Vector Machine) (Not finished yet!)
+3. Neural Network
+    * MLP (Multilayer Perceptron)
+    * RBM (Restricted Boltzmann Machine)
+    * DBN (Deep Belief Network)
+    * CRBM (Continuous Restricted Boltzmann Machine)
+    * CDBN (Continuous Deep Belief Network)
+    * CNN (Convolution Neural Network) (Not finished yet!)
+    * RNN (Recurrent Neural Network) (Not finished yet!)
+    * LSTM (Convolution Neural Network) (Not finished yet!)
