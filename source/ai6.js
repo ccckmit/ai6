@@ -4,3 +4,4 @@ var ai6 = module.exports = {
 
 require('./ml/ml')(ai6)
 require('./nn/nn')(ai6)
+require('./optimize/optimize')(ai6)
