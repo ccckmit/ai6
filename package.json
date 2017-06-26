@@ -1,6 +1,6 @@
 {
   "name": "ai6",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "AI/ML/NN framework",
   "main": "lib/ai6.js",
   "dependencies": {
