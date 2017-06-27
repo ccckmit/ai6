@@ -1,4 +1,4 @@
-var fs = require('fs'); // ¤Ş¥ÎÀÉ®×ª«¥ó
+var fs = require('fs'); // ã¾ãƒéƒî†®î€Šãƒ³
 var kb = require('./pkb');
 var kb1 = new kb();
 var log = console.log;
@@ -7,7 +7,7 @@ var log = console.log;
 kb1.test();
 
 /*
-var code = fs.readFileSync(process.argv[2], "utf8").replace(/\n/gi, ""); // Åª¨úÀÉ®×
+var code = fs.readFileSync(process.argv[2], "utf8").replace(/\n/gi, ""); // å¼„îŸéƒî†®
 
 kb1.load(code);
 kb1.forwardChaining();

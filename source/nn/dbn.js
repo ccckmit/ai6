@@ -17,7 +17,7 @@ module.exports = function (ai6) {
       var inputSize, layerInput
       inputSize = (i === 0) ? settings['nIns'] : settings['hiddenLayerSizes'][i - 1]
       layerInput = (i === 0) ? this.x : this.sigmoidLayers[this.sigmoidLayers.length - 1].sampleHgivenV()
-      var sigmoidLayer = new NN.HiddenLayer({
+      var sigmoidLayer = new NN.NetLayer({
         'input': layerInput,
         'nIn': inputSize,
         'nOut': settings['hiddenLayerSizes'][i],
@@ -32,7 +32,7 @@ module.exports = function (ai6) {
       })
       this.rbmLayers.push(rbmLayer)
     }
-    this.outputLayer = new NN.HiddenLayer({
+    this.outputLayer = new NN.NetLayer({
       'input': this.sigmoidLayers[this.sigmoidLayers.length - 1].sampleHgivenV(),
       'nIn': settings['hiddenLayerSizes'][settings['hiddenLayerSizes'].length - 1],
       'nOut': settings['nOuts'],
@@ -81,7 +81,7 @@ module.exports = function (ai6) {
     if (typeof settings['epochs'] !== 'undefined') epochs = settings['epochs']
     // Fine-Tuning Using MLP (Back Propagation)
     var pretrainedWArray = []
-    var pretrainedBArray = [] // HiddenLayer W,b values already pretrained by RBM.
+    var pretrainedBArray = [] // NetLayer W,b values already pretrained by RBM.
     for (let i = 0; i < this.nLayers; i++) {
       pretrainedWArray.push(this.sigmoidLayers[i].W)
       pretrainedBArray.push(this.sigmoidLayers[i].b)
@@ -114,7 +114,8 @@ module.exports = function (ai6) {
   }
 
   DBN.prototype.predict = function (x) {
-    return NN.feedForward(this.sigmoidLayers, x).output
+    var inputLayers = NN.feedForward(x, this.sigmoidLayers)
+    return inputLayers[inputLayers.length - 1]
   }
 
   return DBN

@@ -32,7 +32,7 @@ module.exports = function (ai6) {
         layerInput = self.sigmoidLayers[self.sigmoidLayers.length - 1].sampleHgivenV()
       }
 
-      var sigmoidLayer = new NN.HiddenLayer({
+      var sigmoidLayer = new NN.NetLayer({
         input: layerInput,
         nIn: inputSize,
         nOut: settings['hiddenLayerSizes'][i],
@@ -56,7 +56,7 @@ module.exports = function (ai6) {
       }
       self.rbmLayers.push(rbmLayer)
     }
-    self.outputLayer = new NN.HiddenLayer({
+    self.outputLayer = new NN.NetLayer({
       input: self.sigmoidLayers[self.sigmoidLayers.length - 1].sampleHgivenV(),
       nIn: settings['hiddenLayerSizes'][settings['hiddenLayerSizes'].length - 1],
       nOut: settings['nOuts'],

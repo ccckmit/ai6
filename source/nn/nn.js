@@ -45,6 +45,81 @@ module.exports = function (ai6) {
 
   NN.gaussian = (x) => Math.exp(-x * x)
 
+  NN.binarySample = function (m) {
+    return m.map1((x) => (Math.random() < x) ? 1 : 0)
+  }
+
+  NN.binaryCrossEntropy = function (x, y) {
+    var a = T.map2(x, y, function (px, py) {
+      return px * Math.log(py)
+    })
+    var b = T.map2(x, y, function (px, py) {
+      return (1 - px) * Math.log(1 - py)
+    })
+    var entropy = -a.madd(b).colSum().mean() // -(a+b).colMean()
+    return entropy
+  }
+
+  NN.feedForward = function (x, netLayers) {
+    var inputLayers = []
+    inputLayers.push(x)
+    for (let i = 0; i < netLayers.length; i++) {
+      inputLayers.push(netLayers[i].output(inputLayers[i]))
+    }
+    return inputLayers
+  }
+
+  // 注意： y 是矩陣，像這樣：[[1,0],[1,0],[1,0],[0,1],[0,1],[0,1]]
+  NN.backPropagate = function (y, netLayers, inputLayers, dActivation) {
+    var n = netLayers.length - 1
+    var delta = new Array(n + 1)
+    var dOutput = netLayers[n].linearOutput(inputLayers[n]).map1(dActivation)
+    var output = inputLayers[n + 1]
+    // delta[n] = (y - output) 乘 dActivation(output)
+    delta[n] = y.msub(output).mmul(dOutput)
+    for (let i = n - 1; i >= 0; i--) {
+      dOutput = netLayers[i].linearOutput(inputLayers[i]).map1(dActivation)
+      // delta[i] = (delta[i+1] * Wt) 乘 dActivation(input[i])
+      delta[i] = netLayers[i + 1].backPropagate(delta[i + 1]).mmul(dOutput)
+    }
+    return delta
+  }
+
+  NN.updateWeights = function (x, netLayers, inputLayers, delta) {
+    var xlen = x.length
+    for (let i = 0; i < netLayers.length; i++) {
+      var deltaW = inputLayers[i].tr().mdot(delta[i]).map1((dw) => dw / xlen)
+      var deltaB = delta[i].colMean()
+      netLayers[i].W = netLayers[i].W.madd(deltaW)
+      netLayers[i].b = netLayers[i].b.vadd(deltaB)
+    }
+  }
+
+  NN.gradientOptimizer = function (x, y, netLayers, dActivation) {
+    let inputLayers = NN.feedForward(x, netLayers)
+    let delta = NN.backPropagate(y, netLayers, inputLayers, dActivation)
+    NN.updateWeights(x, netLayers, inputLayers, delta) // update weights, bias
+  }
+
+  // ref : https://github.com/wagenaartje/neataptic/blob/master/src/layer.js
+  var neataptic = require('neataptic')
+  NN.NetLayer = require('./netLayer')(ai6)
+  NN.RBM = require('./rbm')(ai6)
+  NN.MLP = require('./mlp')(ai6)
+  NN.DBN = require('./dbn')(ai6)
+  NN.CRBM = require('./crbm')(ai6)
+  NN.CDBN = require('./cdbn')(ai6)
+  NN.Perceptron = neataptic.Architect.Perceptron
+  NN.LSTM = neataptic.Architect.LSTM
+  NN.NARX = neataptic.Architect.NARX
+  NN.GRU = neataptic.Architect.GRU
+  NN.Random = neataptic.Architect.Random
+  NN.Hopfield = neataptic.Architect.Hopfield
+  NN.Memory = neataptic.Architect.Memory
+  NN.Dense = neataptic.Architect.Dense
+  return NN
+}
+
 /*
   NN.softmaxVec = function (vec) {
     var max = vec.max()
@@ -62,67 +137,3 @@ module.exports = function (ai6) {
     return r
   }
 */
-  NN.binarySample = function (m) {
-    return m.map1((x) => (Math.random() < x) ? 1 : 0)
-  }
-
-  NN.binaryCrossEntropy = function (x, y) {
-    var a = T.map2(x, y, function (px, py) {
-      return px * Math.log(py)
-    })
-    var b = T.map2(x, y, function (px, py) {
-      return (1 - px) * Math.log(1 - py)
-    })
-    var entropy = -a.madd(b).colSum().mean() // -(a+b).colMean()
-    return entropy
-  }
-
-  NN.feedForward = function (layers, x) {
-    var inputLayers = []
-    inputLayers.push(x)
-    for (let i = 0; i < layers.length; i++) {
-      inputLayers.push(layers[i].output(inputLayers[i]))
-    }
-    return { inputLayers: inputLayers, output: inputLayers[inputLayers.length - 1] }
-  }
-
-  NN.backPropagate = function (y, output, layers, inputLayers, dActivation) {
-    var n = layers.length - 1
-    var delta = new Array(n)
-    var linearOutput = layers[n].linearOutput(inputLayers[n]).map1(dActivation)
-    delta[n] = y.msub(output).mmul(linearOutput)
-    for (let i = n - 1; i >= 0; i--) {
-      var o = layers[i].linearOutput(inputLayers[i]).map1(dActivation)
-      delta[i] = layers[i + 1].backPropagate(delta[i + 1]).mmul(o)
-    }
-    return delta
-  }
-
-  NN.updateWeights = function (x, layers, inputLayers, delta) {
-    for (let i = 0; i < layers.length; i++) {
-      var xlen = x.length
-      var deltaW = inputLayers[i].tr().mdot(delta[i]).map1((x) => x / xlen)
-      var deltaB = delta[i].colMean()
-      layers[i].W = layers[i].W.madd(deltaW)
-      layers[i].b = layers[i].b.vadd(deltaB)
-    }
-  }
-
-  // ref : https://github.com/wagenaartje/neataptic/blob/master/src/layer.js
-  var neataptic = require('neataptic')
-  NN.HiddenLayer = require('./hiddenLayer')(ai6)
-  NN.RBM = require('./rbm')(ai6)
-  NN.MLP = require('./mlp')(ai6)
-  NN.DBN = require('./dbn')(ai6)
-  NN.CRBM = require('./crbm')(ai6)
-  NN.CDBN = require('./cdbn')(ai6)
-  NN.Perceptron = neataptic.Architect.Perceptron
-  NN.LSTM = neataptic.Architect.LSTM
-  NN.NARX = neataptic.Architect.NARX
-  NN.GRU = neataptic.Architect.GRU
-  NN.Random = neataptic.Architect.Random
-  NN.Hopfield = neataptic.Architect.Hopfield
-  NN.Memory = neataptic.Architect.Memory
-  NN.Dense = neataptic.Architect.Dense
-  return NN
-}
