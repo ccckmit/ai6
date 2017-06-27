@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
 module.exports = function (ai6) {
   var NN = ai6.NN
-  var j6 = ai6.j6
-  var T = j6.T
 
   var DBN = function (settings) {
     this.x = settings['input']
@@ -15,17 +13,10 @@ module.exports = function (ai6) {
     this.nOuts = settings['nOuts']
 
     // Constructing Deep Neural Network
-    var i
-    for (i = 0; i < this.nLayers; i++) {
+    for (let i = 0; i < this.nLayers; i++) {
       var inputSize, layerInput
       inputSize = (i === 0) ? settings['nIns'] : settings['hiddenLayerSizes'][i - 1]
-
-      if (i === 0) {
-        layerInput = this.x
-      } else {
-        layerInput = this.sigmoidLayers[this.sigmoidLayers.length - 1].sampleHgivenV()
-      }
-
+      layerInput = (i === 0) ? this.x : this.sigmoidLayers[this.sigmoidLayers.length - 1].sampleHgivenV()
       var sigmoidLayer = new NN.HiddenLayer({
         'input': layerInput,
         'nIn': inputSize,
@@ -57,8 +48,7 @@ module.exports = function (ai6) {
     if (typeof settings['k'] !== 'undefined') k = settings['k']
     if (typeof settings['epochs'] !== 'undefined') epochs = settings['epochs']
 
-    var i // , j
-    for (i = 0; i < this.nLayers; i++) {
+    for (let i = 0; i < this.nLayers; i++) {
       var layerInput, rbm
       if (i === 0) {
         layerInput = this.x
@@ -90,10 +80,9 @@ module.exports = function (ai6) {
     if (typeof settings['lr'] !== 'undefined') lr = settings['lr']
     if (typeof settings['epochs'] !== 'undefined') epochs = settings['epochs']
     // Fine-Tuning Using MLP (Back Propagation)
-    var i
     var pretrainedWArray = []
     var pretrainedBArray = [] // HiddenLayer W,b values already pretrained by RBM.
-    for (i = 0; i < this.nLayers; i++) {
+    for (let i = 0; i < this.nLayers; i++) {
       pretrainedWArray.push(this.sigmoidLayers[i].W)
       pretrainedBArray.push(this.sigmoidLayers[i].b)
     }
@@ -111,7 +100,7 @@ module.exports = function (ai6) {
       'lr': lr,
       'epochs': epochs
     })
-    for (i = 0; i < this.nLayers; i++) {
+    for (let i = 0; i < this.nLayers; i++) {
       this.sigmoidLayers[i].W = mlp.sigmoidLayers[i].W
       this.sigmoidLayers[i].b = mlp.sigmoidLayers[i].b
     }
@@ -121,25 +110,11 @@ module.exports = function (ai6) {
 
   DBN.prototype.getReconstructionCrossEntropy = function () {
     var reconstructedOutput = this.predict(this.x)
-    var a = T.map2(this.y, reconstructedOutput, function (x, y) {
-      return x * Math.log(y)
-    })
-
-    var b = T.map2(this.y, reconstructedOutput, function (x, y) {
-      return (1 - x) * Math.log(1 - y)
-    })
-
-    var crossEntropy = -a.madd(b).colSum().mean()
-    return crossEntropy
+    return NN.binaryCrossEntropy(this.y, reconstructedOutput)
   }
 
   DBN.prototype.predict = function (x) {
-    var layerInput = x
-    for (var i = 0; i < this.nLayers; i++) {
-      layerInput = this.sigmoidLayers[i].output(layerInput)
-    }
-    var output = this.outputLayer.output(layerInput)
-    return output
+    return NN.feedForward(this.sigmoidLayers, x).output
   }
 
   return DBN

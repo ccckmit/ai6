@@ -7,12 +7,9 @@ module.exports = function (ai6) {
   var HiddenLayer = function (settings) {
     this.input = settings['input']
     var a = 1.0 / settings['nIn']
-    settings['W'] = settings['W'] || M.random(settings['nIn'], settings['nOut'], -a, a)
-    settings['b'] = settings['b'] || V.new(settings['nOut'])
-    settings['activation'] = settings['activation'] || NN.sigmoid
-    this.W = settings['W']
-    this.b = settings['b']
-    this.activation = settings['activation']
+    this.W = settings['W'] || M.random(settings['nIn'], settings['nOut'], -a, a)
+    this.b = settings['b'] || V.new(settings['nOut'])
+    this.activation = settings['activation'] || NN.sigmoid
   }
 
   HiddenLayer.prototype.output = function (input) {

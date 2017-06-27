@@ -33,3 +33,13 @@ AI6 is a collection of algorithm for Optimization, Machine-Learning, Neural-Netw
     * CNN (Convolution Neural Network) (Not finished yet!)
     * RNN (Recurrent Neural Network) (Not finished yet!)
     * LSTM (Convolution Neural Network) (Not finished yet!)
+4. Probability
+    * Gibb's Sampling
+    * Metropolis Hasting
+    * EM-Algorithm (Expectation-Maximization)
+5. logic
+    * kb.js (Boolean Logic)
+    * pkb.js (Predicate Logic)
+6. Chess
+    * Gomoku (五子棋)
+

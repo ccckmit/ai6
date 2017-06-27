@@ -96,15 +96,7 @@ module.exports = function (ai6) {
 
   RBM.prototype.getReconstructionCrossEntropy = function () {
     var reconstructedV = this.reconstruct(this.input)
-    var a = j6.T.map2(this.input, reconstructedV, function (x, y) {
-      return x * Math.log(y)
-    })
-
-    var b = j6.T.map2(this.input, reconstructedV, function (x, y) {
-      return (1 - x) * Math.log(1 - y)
-    })
-    var crossEntropy = -a.add(b).rowSum().mean()
-    return crossEntropy
+    return NN.binaryCrossEntropy(this.input, reconstructedV)
   }
 
   return RBM

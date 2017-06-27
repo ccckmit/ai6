@@ -1,3 +1,4 @@
+// ref : https://dotblogs.com.tw/dragon229/2013/02/04/89919
 /* eslint-disable camelcase */
 module.exports = function (ai6) {
   var j6 = ai6.j6

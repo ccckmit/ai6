@@ -35,6 +35,20 @@ module.exports = function (ai6) {
   }
 
   CRBM.prototype.getReconstructionCrossEntropy = function () {
+    var reconstructedV = this.reconstruct(this.input)
+    return NN.binaryCrossEntropy(this.input, reconstructedV)
+  }
+
+  CRBM.prototype.reconstruct = function (v) {
+    var self = this
+    var reconstructedV = self.sampleVgivenH(self.sampleHgivenV(v)[0])[0]
+    return reconstructedV
+  }
+
+  return CRBM
+}
+
+/*
     var self = this
     var reconstructedV = self.reconstruct(self.input)
     var a = T.map2(self.input, reconstructedV, function (x, y) {
@@ -48,13 +62,4 @@ module.exports = function (ai6) {
     var crossEntropy = -a.madd(b).colSum().mean()
     // math.meanVec(math.sumMatAxis(math.addMat(a,b),1))
     return crossEntropy
-  }
-
-  CRBM.prototype.reconstruct = function (v) {
-    var self = this
-    var reconstructedV = self.sampleVgivenH(self.sampleHgivenV(v)[0])[0]
-    return reconstructedV
-  }
-
-  return CRBM
-}
+*/
