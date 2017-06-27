@@ -9,6 +9,11 @@ logs
 *.bak
 bak
 
+# zip
+*.zip
+*.rar
+*.gz
+
 # node 
 node_modules
 
