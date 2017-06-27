@@ -23,16 +23,16 @@ AI6 is a collection of algorithm for Optimization, Machine-Learning, Neural-Netw
 2. Machine Learning
     * KNN (K Nearest Neighbors - Classification)
     * KMean (Clustering)
-    * SVM (Support Vector Machine) (Not finished yet!)
+    * SVM (Support Vector Machine) (derived from machine_learning.js)
 3. Neural Network
-    * MLP (Multilayer Perceptron)
-    * RBM (Restricted Boltzmann Machine)
-    * DBN (Deep Belief Network)
-    * CRBM (Continuous Restricted Boltzmann Machine)
-    * CDBN (Continuous Deep Belief Network)
-    * CNN (Convolution Neural Network) (Not finished yet!)
-    * RNN (Recurrent Neural Network) (Not finished yet!)
-    * LSTM (Convolution Neural Network) (Not finished yet!)
+    * MLP (Multilayer Perceptron) (derived from dnn.js)
+    * RBM (Restricted Boltzmann Machine) (derived from dnn.js)
+    * DBN (Deep Belief Network) (derived from dnn.js)
+    * CRBM (Continuous Restricted Boltzmann Machine) (derived from dnn.js)
+    * CDBN (Continuous Deep Belief Network) (derived from dnn.js)
+    * RNN (Recurrent Neural Network) (based on neataptic.js)
+    * LSTM (Convolution Neural Network) (based on neataptic.js)
+    * CNN (Convolution Neural Network) (Not ready !)
 4. Probability
     * Gibb's Sampling
     * Metropolis Hasting
@@ -42,4 +42,3 @@ AI6 is a collection of algorithm for Optimization, Machine-Learning, Neural-Netw
     * pkb.js (Predicate Logic)
 6. Chess
     * Gomoku (五子棋)
-
