@@ -41,12 +41,9 @@ module.exports = function (ai6) {
   }
 
   DBN.prototype.pretrain = function (settings) {
-    var lr = 0.6
-    var k = 1
-    var epochs = 2000
-    if (typeof settings['lr'] !== 'undefined') lr = settings['lr']
-    if (typeof settings['k'] !== 'undefined') k = settings['k']
-    if (typeof settings['epochs'] !== 'undefined') epochs = settings['epochs']
+    var lr = settings['lr'] || 0.6
+    var k = settings['k'] || 1
+    var epochs = settings['epochs'] || 2000
 
     for (let i = 0; i < this.nLayers; i++) {
       var layerInput, rbm

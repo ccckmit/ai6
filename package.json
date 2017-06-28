@@ -4,6 +4,7 @@
   "description": "AI/ML/NN framework",
   "main": "lib/ai6.js",
   "dependencies": {
+    "convnetjs": "^0.3.0",
     "j6": "^1.0.2",
     "neataptic": "^1.2.31"
   },

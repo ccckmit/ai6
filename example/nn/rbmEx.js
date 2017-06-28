@@ -1,7 +1,5 @@
 var ai6 = require('../../source/ai6')
 
-var startTime = new Date()
-
 var data = [
 [1, 1, 1, 0, 0, 0],
 [1, 0, 1, 0, 0, 0],
@@ -28,5 +26,3 @@ var v = [
 
 console.log(rbm.reconstruct(v).mstr())
 console.log(rbm.sampleHgivenV(v)[0].mstr())
-var stopTime = new Date()
-console.log('millseconds=', stopTime - startTime)

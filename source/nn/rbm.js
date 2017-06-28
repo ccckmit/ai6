@@ -18,41 +18,9 @@ module.exports = function (ai6) {
     var epochs = settings.epochs || 1500
     this.input = settings.input || this.input
 
-    var i, j
     var currentProgress = 1
-    for (i = 0; i < epochs; i++) {
-      /* CD - k . Contrastive Divergence */
-      var ph = this.sampleHgivenV(this.input)
-      var phMean = ph[0]
-      var phSample = ph[1]
-      var chainStart = phSample
-      var gibbsVH, nvSamples, nhMeans, nhSamples // nvMeans,
-
-      for (j = 0; j < k; j++) {
-        if (j === 0) {
-          gibbsVH = this.gibbsHVH(chainStart)
-          nvSamples = gibbsVH[1]
-          nhMeans = gibbsVH[2]
-          nhSamples = gibbsVH[3] // nvMeans = gibbsVH[0]
-        } else {
-          gibbsVH = this.gibbsHVH(nhSamples)
-          nvSamples = gibbsVH[1]
-          nhMeans = gibbsVH[2]
-          nhSamples = gibbsVH[3] // nvMeans = gibbsVH[0]
-        }
-      }
-      // ((input^t*phMean)-(nvSample^t*nhMeans))*1/input.length
-      var deltaW = this.input.tr().mdot(phMean).msub(nvSamples.tr().mdot(nhMeans)).mul(1.0 / this.input.length)
-      // deltaW = (input*phMean)-(nvSample^t * nhMeans)*1/input.length
-      var deltaVbias = this.input.msub(nvSamples).colMean()
-      // deltaHbias = (phSample - nhMeans).mean(row)
-      var deltaHbias = phSample.msub(nhMeans).colMean()
-      // W += deltaW*lr
-      this.W = this.W.add(deltaW.mul(lr))
-      // vbias += deltaVbias*lr
-      this.vbias = this.vbias.add(deltaVbias.mul(lr))
-      // hbias += deltaHbias*lr
-      this.hbias = this.hbias.add(deltaHbias.mul(lr))
+    for (let i = 0; i < epochs; i++) {
+      this.cdk(k, lr)
       var progress = (1.0 * i / epochs) * 100
       if (progress > currentProgress) {
         console.log('RBM', progress.toFixed(0), '% Completed.')
@@ -60,6 +28,40 @@ module.exports = function (ai6) {
       }
     }
     console.log('RBM Final Cross Entropy : ', this.getReconstructionCrossEntropy())
+  }
+
+  /* CD - k . Contrastive Divergence */
+  RBM.prototype.cdk = function (k, lr) {
+    var ph = this.sampleHgivenV(this.input)
+    var phMean = ph[0]
+    var phSample = ph[1]
+    var chainStart = phSample
+    var gibbsVH, nvSamples, nhMeans, nhSamples // nvMeans,
+    for (let j = 0; j < k; j++) {
+      if (j === 0) {
+        gibbsVH = this.gibbsHVH(chainStart)
+        nvSamples = gibbsVH[1]
+        nhMeans = gibbsVH[2]
+        nhSamples = gibbsVH[3] // nvMeans = gibbsVH[0]
+      } else {
+        gibbsVH = this.gibbsHVH(nhSamples)
+        nvSamples = gibbsVH[1]
+        nhMeans = gibbsVH[2]
+        nhSamples = gibbsVH[3] // nvMeans = gibbsVH[0]
+      }
+    }
+    // ((input^t*phMean)-(nvSample^t*nhMeans))*1/input.length
+    var deltaW = this.input.tr().mdot(phMean).msub(nvSamples.tr().mdot(nhMeans)).mul(1.0 / this.input.length)
+    // deltaW = (input*phMean)-(nvSample^t * nhMeans)*1/input.length
+    var deltaVbias = this.input.msub(nvSamples).colMean()
+    // deltaHbias = (phSample - nhMeans).mean(row)
+    var deltaHbias = phSample.msub(nhMeans).colMean()
+    // W += deltaW*lr
+    this.W = this.W.add(deltaW.mul(lr))
+    // vbias += deltaVbias*lr
+    this.vbias = this.vbias.add(deltaVbias.mul(lr))
+    // hbias += deltaHbias*lr
+    this.hbias = this.hbias.add(deltaHbias.mul(lr))
   }
 
   RBM.prototype.propup = function (v) {
