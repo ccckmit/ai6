@@ -16,6 +16,17 @@
 數字辨識 | [mnistPredict.js] | MNIST 數字影像資料庫可用來訓練 CNN 網路辨識手寫數字
 影像辨識 | [cifar10predict.js] | Cifar10 影像資料庫共有十類標記物件，用來訓練出 CNN 網路進行辨識 (本範例採用預先訓練好的網路來預測)
 
+## 安裝方法
+
+```
+$ git clone https://github.com/ccckmit/ai6.git
+$ cd ai6
+$ npm install
+$ cd book/nn/convnetjs
+```
+
+然後你就可以開始執行下列範例了！
+
 ## 範例 : 曲線擬合
 
 程式： [regression.js]
