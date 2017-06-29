@@ -122,7 +122,7 @@ x=1.0000 y=-2.2 label=1 w0=0.0297 w1=0.9703
 
 ## 範例 : 數字辨識
 
-程式： [nmistPredict.js]
+程式： [mnistPredict.js]
 
 執行結果：
 
