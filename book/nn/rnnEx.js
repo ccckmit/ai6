@@ -1,5 +1,7 @@
-var j6 = require('../../lib/j6')
-var NN = j6.NN
+// ref : http://cpmarkchang.logdown.com/posts/278457-neural-network-recurrent-neural-network
+var ai6 = require('../../source/ai6.js')
+var NN = ai6.NN
+var j6 = ai6.j6
 
 let rnn = function (x) {
   let r = 0.05
@@ -7,8 +9,6 @@ let rnn = function (x) {
   let l = x.length
   let nIn = j6.V.new(l) // Array(l).fill(0)
   let nOut = Array(l).fill(0)
-  console.log('nIn=%j', nIn)
-  console.log('nOut=%j', nOut)
   for (let h = 0; h < 10000; h++) {
     for (let i = 0; i < l - 1; i++) {
       nIn[i] = (wc * x[i]) + (wp * nOut[i]) + wb

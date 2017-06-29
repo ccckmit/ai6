@@ -74,14 +74,11 @@ function predicts (data, labels) {
 }
 
 var {data, labels} = genData(20)
-console.log('data=%j', data)
-console.log('labels=%j', labels)
 list(data, labels)
 
 var net = buildNet()
 let trainer = new convnetjs.SGDTrainer(net, {learning_rate: 0.01, momentum: 0.0, batch_size: 1, l2_decay: 0.001})
 train()
 // curve()
-list(data, labels)
 console.log('============predicts============')
 predicts(data, labels)
