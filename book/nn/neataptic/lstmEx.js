@@ -1,5 +1,5 @@
-var ai6 = require('../../source/ai6')
-var net = new ai6.NN.LSTM(1, 6, 1)
+var neataptic = require('neataptic')
+var net = new neataptic.Architect.LSTM(1, 6, 1)
 // Train a sequence: 000100010001....
 var trainData = [
   { input: [0], output: [0] },

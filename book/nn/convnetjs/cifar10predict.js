@@ -31,12 +31,13 @@ function image2sample (image) { // convert image data into CNN input
   return x
 }
 
-var classes = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'];
+var classes = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
 async function imagePredict (file) { // predict
   try {
     var image = await Jimp.read(file)
-    var x = image2sample(image.bitmap)
+    var image32 = image.resize(32, 32)
+    var x = image2sample(image32.bitmap)
     var pretrainedJson = require('./cifar10/cifar10_snapshot.json')
     var net = loadNet(pretrainedJson)
     var yhat = predict(net, x)

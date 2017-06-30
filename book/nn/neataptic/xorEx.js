@@ -1,6 +1,6 @@
 // ref : https://github.com/wagenaartje/neataptic
-var ai6 = require('../../source/ai6')
-var net = new ai6.NN.Perceptron(2, 4, 1)
+var neataptic = require('neataptic')
+var net = new neataptic.Architect.Perceptron(2, 4, 1)
 
 // Train the XOR gate
 net.train([{ input: [0, 0], output: [0] },

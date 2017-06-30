@@ -1,6 +1,6 @@
 // ref : https://github.com/wagenaartje/neataptic
-var ai6 = require('../../source/ai6')
-var net = new ai6.NN.NARX(1, 5, 1, 3, 3)
+var neataptic = require('neataptic')
+var net = new neataptic.Architect.NARX(1, 5, 1, 3, 3)
 // Train a sequence: 00100100..
 net.train([
   { input: [0], output: [0] },
