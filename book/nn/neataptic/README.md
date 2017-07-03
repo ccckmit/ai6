@@ -5,6 +5,9 @@
 [hopfieldEx.js]:hopfieldEx.js
 [lstmEx.js]:lstmEx.js
 [narxEx.js]:narxEx.js
+[lstmCbyc.js]:lstmCbyc.js
+[lstmMt1.js]:lstmMt1.js
+
 
 [Neataptic] 是 [wagenaartje](https://github.com/wagenaartje) 用 JavaScript 撰寫的神經網路 (Neural Network) 套件，主要是把感知器的反傳遞網路 Backpropagation 加上遺傳演化算法結合在一起。
 
@@ -198,7 +201,7 @@ t
 ## 範例 : LSTM 機器翻譯
 
 
-程式： [xorEx.js]
+程式： [lstmMt1.js]
 
 執行結果：
 
