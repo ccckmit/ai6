@@ -1,73 +1,76 @@
 // ref: https://jsfiddle.net/wagenaartje/k23zbf0f/1/
 var neataptic = require('neataptic')
-/** Rename vars */
-var Neat    = neataptic.Neat;
-var Methods = neataptic.Methods;
-var Config  = neataptic.Config;
-var Architect = neataptic.Architect;
-var Network = neataptic.Network;
-var Node = neataptic.Node;
+// var Neat = neataptic.Neat
+var Methods = neataptic.Methods
+var Config = neataptic.Config
+var Architect = neataptic.Architect
+// var Network = neataptic.Network
+// var Node = neataptic.Node
 
 /** Turn off warnings */
-Config.warnings = false;
-
-/** Text to learn */
-var text = `Am I concious? Or am I not?`;
+Config.warnings = false
 
 /** Unique characters */
-text = text.toLowerCase();
-var characters = text.split('').filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+function getCharSet (text) {
+  var characters = text.split('').filter(function (item, i, ar) { return ar.indexOf(item) === i })
+  return characters
+}
 
 /** One-hot encode them */
-var onehot = {};
-
-for(var i = 0; i < characters.length; i++){
-  var zeros = Array.apply(null, Array(characters.length)).map(Number.prototype.valueOf, 0);
-  zeros[i] = 1;
-
-  var character = characters[i];
-  onehot[character] = zeros;
+function oneHotEncoding (characters) {
+  var onehot = {}
+  for (let i = 0; i < characters.length; i++) {
+    var zeros = Array.apply(null, Array(characters.length)).map(Number.prototype.valueOf, 0)
+    zeros[i] = 1
+    var character = characters[i]
+    onehot[character] = zeros
+  }
+  return onehot
 }
 
 /** Prepare the data-set */
-var dataSet = [];
-
-var previous = text[0];
-for(var i = 1 ; i < text.length; i++){
-  var next = text[i];
-
-  dataSet.push({ input: onehot[previous], output: onehot[next] });
-  previous = next;
+function text2dataSet (text, onehot) {
+  var dataSet = []
+  for (let i = 1; i < text.length; i++) {
+    var previous = text[i - 1]
+    var next = text[i]
+    console.log('previous=%s next=%s onehot=%j %j', previous, next, onehot[previous], onehot[next])
+    dataSet.push({ input: onehot[previous], output: onehot[next] })
+//    previous = next
+  }
+  return dataSet
 }
 
-/** Create the network */
-var network = new Architect.LSTM(characters.length, 10, characters.length);
-
-var outputText = []
-function writeSentence(){
-  var output = network.activate(dataSet[0].input);
+function writeSentence (text, onehot, dataSet) {
+  var outputText = []
+  var output = network.activate(dataSet[0].input)
   outputText.push(text[0])
 
-//  $('.text').append(text[0]);
-  for(var i = 0; i < text.length; i++){
-    var max = Math.max.apply(null, output);
-    var index = output.indexOf(max);
+  for (let i = 0; i < text.length; i++) {
+    var max = Math.max.apply(null, output)
+    var index = output.indexOf(max)
 
-    var zeros = Array.apply(null, Array(characters.length)).map(Number.prototype.valueOf, 0);
-    zeros[index] = 1;
+    var zeros = Array.apply(null, Array(characters.length)).map(Number.prototype.valueOf, 0)
+    zeros[index] = 1
 
     var character = Object.keys(onehot).find(key => onehot[key].toString() === zeros.toString());
-//    $('.text').append(character);
     outputText.push(character)
     console.log(character)
 
-    output = network.activate(zeros);
+    output = network.activate(zeros)
   }
 }
 
-console.log('Network conns', network.connections.length, 'nodes', network.nodes.length);
-console.log('Dataset size:', dataSet.length);
-console.log('Characters:', Object.keys(onehot).length);
+var text = `Am I concious? Or am I not?`.toLowerCase() // Text to learn
+var characters = getCharSet(text)
+var onehot = oneHotEncoding(characters)
+var dataSet = text2dataSet(text, onehot)
+var network = new Architect.LSTM(characters.length, 10, characters.length)
+
+console.log('Characters=%s, count=%d', characters, Object.keys(onehot).length)
+console.log('onehot=%j', onehot)
+console.log('dataset.size=%d, dataSet=%j', dataSet.length, dataSet)
+console.log('Network conns', network.connections.length, 'nodes', network.nodes.length)
 
 network.train(dataSet, {
   log: 1,
@@ -77,4 +80,4 @@ network.train(dataSet, {
   clear: true
 })
 
-writeSentence()
+writeSentence(text, onehot, dataSet)
