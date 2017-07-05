@@ -36,7 +36,6 @@ function text2dataSet (text, onehot) {
     var next = text[i]
     console.log('previous=%s next=%s onehot=%j %j', previous, next, onehot[previous], onehot[next])
     dataSet.push({ input: onehot[previous], output: onehot[next] })
-//    previous = next
   }
   return dataSet
 }
@@ -53,7 +52,7 @@ function writeSentence (text, onehot, dataSet) {
     var zeros = Array.apply(null, Array(characters.length)).map(Number.prototype.valueOf, 0)
     zeros[index] = 1
 
-    var character = Object.keys(onehot).find(key => onehot[key].toString() === zeros.toString());
+    var character = Object.keys(onehot).find(key => onehot[key].toString() === zeros.toString())
     outputText.push(character)
     console.log(character)
 
@@ -79,5 +78,7 @@ network.train(dataSet, {
   error: 0.005,
   clear: true
 })
+
+// writeSentence(text, onehot, dataSet)
 
 writeSentence(text, onehot, dataSet)
