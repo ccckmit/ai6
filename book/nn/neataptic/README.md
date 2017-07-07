@@ -6,7 +6,9 @@
 [lstmEx.js]:lstmEx.js
 [narxEx.js]:narxEx.js
 [lstmCbyc.js]:lstmCbyc.js
-[lstmMt1.js]:lstmMt1.js
+[lstm.js]:lstm.js
+[lstmTrain.js]:lstmTrain.js
+[lstmPredict.js]:lstmPredict.js
 
 
 [Neataptic] 是 [wagenaartje](https://github.com/wagenaartje) 用 JavaScript 撰寫的神經網路 (Neural Network) 套件，主要是把感知器的反傳遞網路 Backpropagation 加上遺傳演化算法結合在一起。
@@ -22,7 +24,9 @@ XOR 感知器 | [xorEx.js] | XOR 用單層神經網路無法完成，因此是�
 LSTM 網路 | [lstmEx.js] | 遞歸網路 RNN 的延伸，長短期記憶模型，本範例用來學習 000100010001... 的固定樣式序列。
 NARX 網路 | [narxEx.js] | [NARX](https://en.wikipedia.org/wiki/Nonlinear_autoregressive_exogenous_model) 網路，本範例還是用來學習 000100010001... 的固定樣式序列。
 LSTM 語句產生 | [lstmCbyc.js] | 學習並重複產生該語句 (ex: Am I concious? Or am I not?)
-LSTM 機器翻譯 | [lstmMt1.js] | 簡易的 LSTM 機器翻譯 (採用 onehot 向量編碼法)
+通用文字模組 | [lstm.js] | 被 [lstmTrain.js] , [lstmPredict.js] 使用
+通用文字學習 | [lstmTrain.js] | ex: node lstmTrain data/exp.txt exp.lstm.json
+通用文字預測 | [lstmPredict.js] | ex: node lstmPredict exp.lstm.json 100
 
 ## 安裝方法
 
@@ -343,10 +347,3 @@ a+(b+a)
 (a+b)+(b+a)+b
 (a+(b+a
 ```
-
-
-
-
-
-
-
