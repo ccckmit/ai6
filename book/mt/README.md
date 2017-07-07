@@ -19,6 +19,9 @@ between Human and Machine Translation](https://arxiv.org/pdf/1609.08144.pdf)
 
 [Understanding LSTM Networks](http://colah.github.io/posts/2015-08-Understanding-LSTMs/) , colah's blog
 
+[Tensorflow 官方 Sequence-to -Sequence Models 學習](http://cyruschiu.github.io/2017/02/24/learning-Tensoflow-Seq2Seq-for-translate/)
+
+[TensorFlow Models](https://github.com/tensorflow/models)
 
 RNN 會根據距離指數下降的遺忘事情，但是 LSTM 透過長期記憶來解決這個問題。
 
@@ -34,3 +37,4 @@ RNN 會根據距離指數下降的遺忘事情，但是 LSTM 透過長期記憶�
 [Why Convolutional Neural Networks are a Great Architecture for Machine Translation](https://medium.com/ai-society/why-convolutional-neural-networks-are-a-great-architecture-for-machine-translation-9258ca1263a8)
 
 [A CONVOLUTIONAL ENCODER MODEL FOR NEURAL MACHINE TRANSLATION](https://michaelauli.github.io/papers/convenc.pdf)
+
