@@ -235,3 +235,91 @@ sWord=an mt:tWord=一個
 sWord=free mt:tWord=自由
 sWord=worker mt:tWord=工作者
 ```
+
+## 範例：學習數學運算式
+
+
+```
+D:\DropboxNqu\github\ccc\course\ai6\book\nn\neataptic>node exp1
+seqWords = ["a",".","b",".","a","+","b",".","a","+","(","a","+","b",")",".","(","
+b","+","a",")",".","(","a","+","b",")","+","a",".","(","a","+","(","b","+","a",")
+",")","+","(","(","a","+","a",")","+","a",")",".",""]
+words = ["a",".","b","+","(",")",""]
+Seq: sWord[0]=a [1,0,0,0,0,0,0] sWord[1]=. [0,1,0,0,0,0,0]
+Seq: sWord[1]=. [0,1,0,0,0,0,0] sWord[2]=b [0,0,1,0,0,0,0]
+Seq: sWord[2]=b [0,0,1,0,0,0,0] sWord[3]=. [0,1,0,0,0,0,0]
+Seq: sWord[3]=. [0,1,0,0,0,0,0] sWord[4]=a [1,0,0,0,0,0,0]
+Seq: sWord[4]=a [1,0,0,0,0,0,0] sWord[5]=+ [0,0,0,1,0,0,0]
+Seq: sWord[5]=+ [0,0,0,1,0,0,0] sWord[6]=b [0,0,1,0,0,0,0]
+Seq: sWord[6]=b [0,0,1,0,0,0,0] sWord[7]=. [0,1,0,0,0,0,0]
+Seq: sWord[7]=. [0,1,0,0,0,0,0] sWord[8]=a [1,0,0,0,0,0,0]
+Seq: sWord[8]=a [1,0,0,0,0,0,0] sWord[9]=+ [0,0,0,1,0,0,0]
+...
+Network conns 699 nodes 54
+iteration 1 error 0.1432566965652746 rate 0.1
+iteration 2 error 0.11684800648245036 rate 0.1
+iteration 3 error 0.11307736628709464 rate 0.1
+iteration 4 error 0.11033980053796752 rate 0.1
+iteration 5 error 0.10830829224582636 rate 0.1
+iteration 6 error 0.10670669961308896 rate 0.1
+...
+iteration 476 error 0.010528469440399845 rate 0.1
+iteration 477 error 0.010343157817183493 rate 0.1
+iteration 478 error 0.01007344457776886 rate 0.1
+iteration 479 error 0.009890101019141413 rate 0.1
+sLines=["","","","","","a","a","a","a","(","(","(","(","(","(a","(a","(a","(b+"]
+======== gen ===========
+sWords = [""]
+gen = .b.
+======== gen ===========
+sWords = [""]
+gen = .(a+b+a).
+======== gen ===========
+sWords = [""]
+gen = (b)+a.
+======== gen ===========
+sWords = [""]
+gen = (b+a).
+======== gen ===========
+sWords = [""]
+gen = (b+a).
+======== gen ===========
+sWords = ["a"]
+gen = a..
+======== gen ===========
+sWords = ["a"]
+gen = a.(b+a+a.
+======== gen ===========
+sWords = ["a"]
+gen = a.b+b.
+======== gen ===========
+sWords = ["a"]
+gen = a.a+(b+a).
+======== gen ===========
+sWords = ["","(",""]
+gen = (b.
+======== gen ===========
+sWords = ["","(",""]
+gen = (.a+(b+a).
+======== gen ===========
+sWords = ["","(",""]
+gen = (b.
+======== gen ===========
+sWords = ["","(",""]
+gen = (a+b.
+======== gen ===========
+sWords = ["","(",""]
+gen = (.a+(b+a).
+======== gen ===========
+sWords = ["","(","a"]
+gen = (a+b).
+======== gen ===========
+sWords = ["","(","a"]
+gen = (a+b).
+======== gen ===========
+sWords = ["","(","a"]
+gen = (a+a).
+======== gen ===========
+sWords = ["","(","b","+",""]
+gen = (b+.(a+b)+a.
+```
