@@ -198,128 +198,155 @@ t
 ?
 ```
 
-## 範例 : LSTM 機器翻譯
+## 通用的文字預測程式
 
+### 範例 1 : 狗世界的英文字串學習
 
-程式： [lstmMt1.js]
-
-執行結果：
+輸入檔： [data/edog.txt](data/edog.txt)
 
 ```
-sWords=["no","free","lunch",".","he","is","an","free","worker"]
-tWords=["沒有","免費的","午餐",".","他","是","一個","自由","工作者"]
-sWord=no [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] tWord=沒有 [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]
-sWord=free [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0] tWord=免費的 [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0]
-sWord=lunch [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0] tWord=午餐 [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
-sWord=. [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0] tWord=. [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]
-sWord=he [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0] tWord=他 [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0]
-sWord=is [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0] tWord=是 [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0]
-sWord=an [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0] tWord=一個 [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0]
-sWord=free [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0] tWord=自由 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]
-sWord=worker [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0] tWord=工作者 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
-dataSet=[{"input":[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"output":[0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]},{"input":[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"output":[0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0]},{"input":[0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],"output":[0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0]},{"input":[0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],"output":[0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]},{"input":[0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],"output":[0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0]},{"input":[0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0],"output":[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0]},{"input":[0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],"output":[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0]},{"input":[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"output":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]},{"input":[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],"output":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]}]
-Network conns 1356 nodes 72
-iteration 1 error 0.1849561235691037 rate 0.1
-iteration 2 error 0.0940191478193266 rate 0.1
-iteration 3 error 0.06623921611129939 rate 0.1
+a dog
+little dog
+little black dog
+black dog
+a little black dog
+a little dog
+```
+
+訓練過程：
+
+```
+D:\Dropbox\ai6\book\nn\neataptic>node lstmTrain data/edog.txt edog.lstm.json
+seqText="a dog\r\nlittle dog\r\nlittle black dog\r\nblack dog\r\na little black
+dog\r\na little dog"
+words = ["[#start#]","a"," ","d","o","g","\r","\n","l","i","t","e","b","c","k"]
+Network conns 2025 nodes 90
+iteration 1 error 0.07841929704993059 rate 0.1
+iteration 2 error 0.05948436172466311 rate 0.1
+iteration 3 error 0.05491542447349242 rate 0.1
+iteration 4 error 0.050032170796091714 rate 0.1
 ...
-iteration 190 error 0.005026482276163116 rate 0.1
-iteration 191 error 0.004973390678396943 rate 0.1
-sWord=no mt:tWord=沒有
-sWord=free mt:tWord=免費的
-sWord=lunch mt:tWord=午餐
-sWord=. mt:tWord=.
-sWord=he mt:tWord=他
-sWord=is mt:tWord=是
-sWord=an mt:tWord=一個
-sWord=free mt:tWord=自由
-sWord=worker mt:tWord=工作者
+iteration 163 error 0.012938346303900537 rate 0.1
+iteration 164 error 0.010822697178544552 rate 0.1
+iteration 165 error 0.010313658161468101 rate 0.1
+iteration 166 error 0.009602751808102253 rate 0.1
 ```
 
-## 範例：學習數學運算式
-
+用訓練完成的網路產生字串
 
 ```
-D:\DropboxNqu\github\ccc\course\ai6\book\nn\neataptic>node exp1
-seqWords = ["a",".","b",".","a","+","b",".","a","+","(","a","+","b",")",".","(","
-b","+","a",")",".","(","a","+","b",")","+","a",".","(","a","+","(","b","+","a",")
-",")","+","(","(","a","+","a",")","+","a",")",".",""]
-words = ["a",".","b","+","(",")",""]
-Seq: sWord[0]=a [1,0,0,0,0,0,0] sWord[1]=. [0,1,0,0,0,0,0]
-Seq: sWord[1]=. [0,1,0,0,0,0,0] sWord[2]=b [0,0,1,0,0,0,0]
-Seq: sWord[2]=b [0,0,1,0,0,0,0] sWord[3]=. [0,1,0,0,0,0,0]
-Seq: sWord[3]=. [0,1,0,0,0,0,0] sWord[4]=a [1,0,0,0,0,0,0]
-Seq: sWord[4]=a [1,0,0,0,0,0,0] sWord[5]=+ [0,0,0,1,0,0,0]
-Seq: sWord[5]=+ [0,0,0,1,0,0,0] sWord[6]=b [0,0,1,0,0,0,0]
-Seq: sWord[6]=b [0,0,1,0,0,0,0] sWord[7]=. [0,1,0,0,0,0,0]
-Seq: sWord[7]=. [0,1,0,0,0,0,0] sWord[8]=a [1,0,0,0,0,0,0]
-Seq: sWord[8]=a [1,0,0,0,0,0,0] sWord[9]=+ [0,0,0,1,0,0,0]
+D:\Dropbox\ai6\book\nn\neataptic>node lstmPredict edog.lstm.json 100
+======== gen (prefix=[]) ===========
+a dog
+little dog
+litle dog
+a little dog
+a dog
+little dog
+a litle dog
+a litle dog
+a little do
+```
+
+### 範例 2 : 狗世界的中文字串學習
+
+輸入檔： [data/cdog.txt](data/cdog.txt)
+
+```
+一隻狗
+小狗
+小黑狗
+黑狗
+一隻小黑狗
+一隻小狗
+```
+
+訓練過程：
+
+```
+D:\Dropbox\ai6\book\nn\neataptic>node lstmTrain data/cdog.txt cdog.lstm.json
 ...
-Network conns 699 nodes 54
-iteration 1 error 0.1432566965652746 rate 0.1
-iteration 2 error 0.11684800648245036 rate 0.1
-iteration 3 error 0.11307736628709464 rate 0.1
-iteration 4 error 0.11033980053796752 rate 0.1
-iteration 5 error 0.10830829224582636 rate 0.1
-iteration 6 error 0.10670669961308896 rate 0.1
-...
-iteration 476 error 0.010528469440399845 rate 0.1
-iteration 477 error 0.010343157817183493 rate 0.1
-iteration 478 error 0.01007344457776886 rate 0.1
-iteration 479 error 0.009890101019141413 rate 0.1
-sLines=["","","","","","a","a","a","a","(","(","(","(","(","(a","(a","(a","(b+"]
-======== gen ===========
-sWords = [""]
-gen = .b.
-======== gen ===========
-sWords = [""]
-gen = .(a+b+a).
-======== gen ===========
-sWords = [""]
-gen = (b)+a.
-======== gen ===========
-sWords = [""]
-gen = (b+a).
-======== gen ===========
-sWords = [""]
-gen = (b+a).
-======== gen ===========
-sWords = ["a"]
-gen = a..
-======== gen ===========
-sWords = ["a"]
-gen = a.(b+a+a.
-======== gen ===========
-sWords = ["a"]
-gen = a.b+b.
-======== gen ===========
-sWords = ["a"]
-gen = a.a+(b+a).
-======== gen ===========
-sWords = ["","(",""]
-gen = (b.
-======== gen ===========
-sWords = ["","(",""]
-gen = (.a+(b+a).
-======== gen ===========
-sWords = ["","(",""]
-gen = (b.
-======== gen ===========
-sWords = ["","(",""]
-gen = (a+b.
-======== gen ===========
-sWords = ["","(",""]
-gen = (.a+(b+a).
-======== gen ===========
-sWords = ["","(","a"]
-gen = (a+b).
-======== gen ===========
-sWords = ["","(","a"]
-gen = (a+b).
-======== gen ===========
-sWords = ["","(","a"]
-gen = (a+a).
-======== gen ===========
-sWords = ["","(","b","+",""]
-gen = (b+.(a+b)+a.
+iteration 313 error 0.010488494419177973 rate 0.1
+iteration 314 error 0.01030299447451737 rate 0.1
+iteration 315 error 0.01012583958893957 rate 0.1
+iteration 316 error 0.009957086658870906 rate 0.1
 ```
+
+用訓練完成的網路產生字串
+
+```
+D:\Dropbox\ai6\book\nn\neataptic>node lstmPredict cdog.lstm.json 100
+======== gen (prefix=[]) ===========
+一隻狗
+小狗
+小黑狗
+一隻小狗
+一隻小狗
+小黑狗
+一隻小狗
+小黑狗
+一隻小狗
+一隻小狗
+小黑狗
+一隻小狗
+一隻狗
+小黑狗
+一隻小狗
+小黑狗
+一隻小狗
+一隻小狗
+小黑
+```
+
+### 範例 3 : 數學運算式的學習
+
+輸入檔： [data/exp.txt](data/exp.txt)
+
+```
+a
+b
+a+b
+(a+b)+a
+a+(b+a)
+(a+b)+(b+a)
+(a+(b+a))+b
+((a+b)+a)+((b+a)+b)
+```
+
+訓練過程：
+
+```
+D:\Dropbox\ai6\book\nn\neataptic>node lstmTrain data/exp.txt exp.lstm.json
+...
+iteration 384 error 0.01110337015812884 rate 0.1
+iteration 385 error 0.010713149768480227 rate 0.1
+iteration 386 error 0.012236864162624268 rate 0.1
+iteration 387 error 0.012772430304249613 rate 0.1
+iteration 388 error 0.010220229347676834 rate 0.1
+iteration 389 error 0.00993338909862571 rate 0.1
+```
+
+用訓練完成的網路產生字串
+
+```
+
+D:\Dropbox\ai6\book\nn\neataptic>node lstmPredict exp.lstm.json 100
+======== gen (prefix=[]) ===========
+a
+b
+a+b
+(a+b)+a
+a+(b+a)
+(a+b)+(b+a)
+(a+b)+(b+a)
+(a+b)+((a+b)+a)+(b+a)
+(a+b)+(b+a)+b
+(a+(b+a
+```
+
+
+
+
+
+
+

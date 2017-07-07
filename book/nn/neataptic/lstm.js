@@ -14,7 +14,6 @@ LSTM.init = function () {
 }
 
 LSTM.text2words = function (text) {
-//  return text.toLowerCase().replace(/([\W])/g, ' $1 ').split(/\s+/).filter(word => word.length > 0)
   return text.toLowerCase().split(/\s+/).filter(word => word.length > 0)
 }
 
@@ -48,15 +47,12 @@ LSTM.seqDataSet = function (sWords, wordVecMap) {
   for (let i = 1; i < sWords.length; i++) {
     var sVector = wordVecMap[sWords[i - 1]]
     var tVector = wordVecMap[sWords[i]]
-//    console.log('Seq: sWord[%d]=%s %j sWord[%d]=%s %j', i - 1, sWords[i - 1], sVector, i, sWords[i], tVector)
     dataSet.push({ input: sVector, output: tVector })
   }
   return dataSet
 }
 
 LSTM.dataTrain = function (dataSet, words) {
-//  console.log('dataSet=%j', dataSet)
-
   var network = new Architect.LSTM(words.length, Math.min(words.length, 100), words.length)
 
   console.log('Network conns', network.connections.length, 'nodes', network.nodes.length)
@@ -65,7 +61,6 @@ LSTM.dataTrain = function (dataSet, words) {
     log: 1,
     rate: 0.1,
     cost: Methods.Cost.MSE,
-//    error: 0.005,
     error: 0.01,
     clear: true
   })
@@ -86,7 +81,6 @@ LSTM.train = function (seqText) {
   console.log('seqText=%j', seqText)
   var seqWords = (LSTM.mode === 'char') ? LSTM.text2chars(seqText) : LSTM.text2words(seqText)
   seqWords = [LSTM.startWord].concat(seqWords)
-//  console.log('seqWords = %j', seqWords)
   var wordSet = LSTM.words2set(seqWords)
   LSTM.words = Array.from(wordSet)
   console.log('words = %j', LSTM.words)
@@ -103,8 +97,6 @@ LSTM.genSentence = function (sWords, stops = [], maxLen = 10) {
   var lastWord = LSTM.startWord
   var word
   for (let i = 0; i < sWords.length; i++) {
-    var sWord = sWords[i]
-//    console.log('source:word=%s', sWord)
     genList.push(sWords[i])
     let prob = LSTM.network.activate(LSTM.wordVecMap[sWords[i]])
     word = LSTM.prob2word(prob, LSTM.words, LSTM.vecWordMap)
@@ -115,24 +107,19 @@ LSTM.genSentence = function (sWords, stops = [], maxLen = 10) {
     let prob = LSTM.network.activate(LSTM.wordVecMap[lastWord])
     word = LSTM.prob2word(prob, LSTM.words, LSTM.vecWordMap)
     if (stops.indexOf(word) >= 0) break
-//    console.log('target:word=%s', word)
     lastWord = word
   }
   genList.push(word)
   return genList
-//  network.activate(wordVecMap['.'])
 }
 
 LSTM.genLines = function (sLines, stops = [], maxLen = 100, postTriggers = [], preTrigger = []) {
-  console.log('mode=%s maxLen=%d', LSTM.mode, maxLen)
-  console.log('sLines=%j', sLines)
   for (let line of sLines) {
-    console.log('======== gen ===========')
-    let sWords = preTrigger.concat(LSTM.text2words(line)).concat(postTriggers)
-    console.log('sWords = %j', sWords)
-    var genList = LSTM.genSentence(sWords, stops, maxLen)
+    let prefix = preTrigger.concat(LSTM.text2words(line)).concat(postTriggers)
+    var genList = LSTM.genSentence(prefix, stops, maxLen)
     var genText = (LSTM.mode === 'char') ? genList.join('') : genList.join(' ')
-    console.log('gen = %s', genText)
+    console.log('======== gen (prefix=%j) ===========', prefix)
+    console.log('%s', genText)
   }
 }
 
@@ -150,11 +137,8 @@ LSTM.toJSON = function () {
 
 LSTM.fromJSON = function (json) {
   var obj = JSON.parse(json)
-//  console.log('obj=%j', obj)
   LSTM.mode = obj.mode
   LSTM.words = obj.words
-  console.log('obj.words=%j', obj.words)
-  console.log('LSTM.words=%j', LSTM.words)
   LSTM.wordVecMap = obj.wordVecMap
   LSTM.vecWordMap = obj.vecWordMap
   LSTM.network = neataptic.Network.fromJSON(obj.network)
