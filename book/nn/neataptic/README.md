@@ -220,7 +220,7 @@ a little dog
 訓練過程：
 
 ```
-D:\Dropbox\ai6\book\nn\neataptic>node lstmTrain data/edog.txt edog.lstm.json
+$ node lstmTrain data/edog.txt edog.lstm.json
 seqText="a dog\r\nlittle dog\r\nlittle black dog\r\nblack dog\r\na little black
 dog\r\na little dog"
 words = ["[#start#]","a"," ","d","o","g","\r","\n","l","i","t","e","b","c","k"]
@@ -239,7 +239,7 @@ iteration 166 error 0.009602751808102253 rate 0.1
 用訓練完成的網路產生字串
 
 ```
-D:\Dropbox\ai6\book\nn\neataptic>node lstmPredict edog.lstm.json 100
+$ node lstmPredict edog.lstm.json 100
 ======== gen (prefix=[]) ===========
 a dog
 little dog
@@ -268,7 +268,7 @@ a little do
 訓練過程：
 
 ```
-D:\Dropbox\ai6\book\nn\neataptic>node lstmTrain data/cdog.txt cdog.lstm.json
+$ node lstmTrain data/cdog.txt cdog.lstm.json
 ...
 iteration 313 error 0.010488494419177973 rate 0.1
 iteration 314 error 0.01030299447451737 rate 0.1
@@ -279,7 +279,7 @@ iteration 316 error 0.009957086658870906 rate 0.1
 用訓練完成的網路產生字串
 
 ```
-D:\Dropbox\ai6\book\nn\neataptic>node lstmPredict cdog.lstm.json 100
+$ node lstmPredict cdog.lstm.json 100
 ======== gen (prefix=[]) ===========
 一隻狗
 小狗
@@ -320,7 +320,7 @@ a+(b+a)
 訓練過程：
 
 ```
-D:\Dropbox\ai6\book\nn\neataptic>node lstmTrain data/exp.txt exp.lstm.json
+$ node lstmTrain data/exp.txt exp.lstm.json
 ...
 iteration 384 error 0.01110337015812884 rate 0.1
 iteration 385 error 0.010713149768480227 rate 0.1
@@ -334,7 +334,7 @@ iteration 389 error 0.00993338909862571 rate 0.1
 
 ```
 
-D:\Dropbox\ai6\book\nn\neataptic>node lstmPredict exp.lstm.json 100
+$ node lstmPredict exp.lstm.json 100
 ======== gen (prefix=[]) ===========
 a
 b
