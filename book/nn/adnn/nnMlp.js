@@ -17,7 +17,7 @@ var net = nn.sequence([
   nn.linear(nHidden[1], nHidden[2]),
   nn.sigmoid,
   nn.linear(nHidden[2], nOutput),
-  nn.sigmoid
+//  nn.sigmoid
 ])
 
 var data = [
@@ -52,7 +52,7 @@ var trainingData = loadData(data)
 console.log('nnTrain')
 opt.nnTrain(net, trainingData, opt.regressionLoss, {
   batchSize: 1,
-  iterations: 10000,
+  iterations: 100000,
   method: opt.sgd({ stepSize: 1, stepSizeDecay: 0.999 })
 })
 
