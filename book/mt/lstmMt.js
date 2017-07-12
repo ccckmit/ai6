@@ -1,37 +1,73 @@
+/*
+自建網路： https://wagenaartje.github.io/neataptic/
+https://wagenaartje.github.io/neataptic/docs/architecture/layer/
+
+var input = new Layer.Dense(2);
+var hidden1 = new Layer.LSTM(5);
+var hidden2 = new Layer.GRU(3);
+var output = new Layer.Dense(1);
+
+input.connect(hidden1);
+hidden1.connect(hidden2);
+hidden2.connect(output);
+
+var myNetwork = Architect.Construct([input, hidden1, hidden2, output]);
+
+自建網路： https://github.com/wagenaartje/neataptic/issues/25
+
+function LSTM(inputSize, hiddenSize, outputSize){
+  var input = new Layer.Dense(inputSize);
+  var hidden = new Layer.LSTM(hiddenSize);
+  var output = new Layer.Dense(outputSize);
+
+  input.connect(hidden, Methods.Connection.ALL_TO_ALL);
+  hidden.connect(output, Methods.Connection.ALL_TO_ALL);
+
+  // option.inputToOutput is set to true for Architect.LSTM
+  if(true)
+    input.connect(output, Methods.Connection.ALL_TO_ALL);
+
+  return Architect.Construct([input, hidden, output]);
+}
+
+*/
+
 var W = require('./words')
-var LMT = module.exports = require('./lstm')
+var sLstm = require('./lstmSeq')
+var mtLstm = module.exports = require('./lstm')
 
-LMT.text2vector = function (text) {
-  let words = W.text2words(text)
-  let vector = W.words2vector(words, LMT.words.length, LMT.w2i)
-  return vector
-}
+sLstm.seqTrain = sLstm.train
 
-LMT.s2tData = function (sLine, tLine) {
-  return { input: LMT.text2vector(sLine), output: LMT.text2vector(tLine) }
-}
-
-LMT.mtDataSet = function (lines) {
-//  console.log('lines=%j', lines)
-  var dataSet = []
-  for (let i = 0; i < lines.length; i++) {
-    var parts = lines[i].split('=')
+sLstm.train = function (seqText) {
+  let lines = seqText.split(/\r?\n/)
+  let sList = []
+  for (let line of lines) {
+    let parts = line.split('=')
     if (parts.length < 2) continue
-    var [sLine, tLine] = parts
-//    console.log('s=%s t=%s', sLine, tLine)
-    var s2tData = LMT.s2tData(sLine, tLine)
-//    console.log('s2tData=%j', s2tData)
-    dataSet.push(s2tData)
+    let sLine = parts[0]
+    sList.push(sLine.trim())
   }
-  return dataSet
+  let sText = sList.join(' ↓ ')
+  console.log('sText=%s', sText)
+  sLstm.seqTrain(sText)
 }
 
-LMT.mtTrain = function (text) {
-  LMT.words = W.getWordSet(text)
-  console.log('LMT.words=%j', LMT.words)
-  LMT.w2i = W.words2map(LMT.words)
-  console.log('LMT.w2i=%j', LMT.w2i)
-  var dataSet = LMT.mtDataSet(text.split(/\r?\n/))
-//  console.log('dataSet=%s', JSON.stringify(dataSet))
-  LMT.network = LMT.dataTrain(dataSet, LMT.words)
+mtLstm.train = function (seqText) {
+  sLstm.train(seqText)
+  let lines = seqText.split(/\r?\n/)
+  for (let line of lines) {
+    let parts = line.split('=')
+    if (parts.length < 2) continue
+    let sLine = parts[0]
+    let tLine = parts[1]
+    let sWords = sLine.split(/\s+/)
+    let tWords = tLine.split(/\s+/)
+    for (let t = 0; t < sWords.length; t++) {
+      var p = sLstm.network.activate(sLstm.setting.wordVecMap[sWords[t]])
+      // var h = sLstm.network.hidden
+      var c = sLstm.network.hidden
+    }
+  }
+  let sText = sList.join(' ↓ ')
+  console.log('sText=%s', sText)
 }
