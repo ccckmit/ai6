@@ -11,22 +11,24 @@ console.log('buildNet')
 // Definition using basic layers
 var net = nn.sequence([
   nn.linear(nInputs, nHidden[0]),
+//  nn.tanh,
   nn.sigmoid,
   nn.linear(nHidden[0], nHidden[1]),
   nn.sigmoid,
-  nn.linear(nHidden[1], nHidden[2]),
-  nn.sigmoid,
-  nn.linear(nHidden[2], nOutput),
-//  nn.sigmoid
+//  nn.linear(nHidden[1], nHidden[2]),
+//  nn.tanh,
+//  nn.linear(nHidden[2], nOutput),
+  nn.linear(nHidden[1], nOutput),
+  nn.softmax
 ])
 
 var data = [
-  {input: [0.4, 0.5, 0.5, 0.,  0.,  0.], output: [1, 0]},
-  {input: [0.5, 0.3, 0.5, 0.,  0.,  0.], output: [1, 0]},
-  {input: [0.4, 0.5, 0.5, 0.,  0.,  0.], output: [1, 0]},
-  {input: [0.,  0.,  0.5, 0.3, 0.5, 0.], output: [0, 1]},
-  {input: [0.,  0.,  0.5, 0.4, 0.5, 0.], output: [0, 1]},
-  {input: [0.,  0.,  0.5, 0.5, 0.5, 0.], output: [0, 1]}
+  {input: [0.4, 0.5, 0.5, 0.,  0.,  0.], output: [1]},
+  {input: [0.5, 0.3, 0.5, 0.,  0.,  0.], output: [1]},
+  {input: [0.4, 0.5, 0.5, 0.,  0.,  0.], output: [1]},
+  {input: [0.,  0.,  0.5, 0.3, 0.5, 0.], output: [0]},
+  {input: [0.,  0.,  0.5, 0.4, 0.5, 0.], output: [0]},
+  {input: [0.,  0.,  0.5, 0.5, 0.5, 0.], output: [0]}
 ]
 
 var tensor1d = function (array) {
@@ -50,10 +52,11 @@ console.log('loadData')
 var trainingData = loadData(data)
 
 console.log('nnTrain')
-opt.nnTrain(net, trainingData, opt.regressionLoss, {
-  batchSize: 1,
-  iterations: 100000,
-  method: opt.sgd({ stepSize: 1, stepSizeDecay: 0.999 })
+opt.nnTrain(net, trainingData, opt.classificationLoss, {
+  batchSize: 3, // batch 超過 3 就無法成功， why ?
+  iterations: 1000,
+  method: opt.sgd({ stepSize: 1, stepSizeDecay: 0.999 }),
+  verbose: true
 })
 
 console.log('predict')
@@ -61,5 +64,5 @@ console.log('predict')
 for (let i = 0; i < trainingData.length; i++) {
   var input = trainingData[i].input
   var probs = net.eval(input)
-  console.log('input=%j probs=%j', input, probs)
+  console.log('input=%j\noutput=%j', input, probs)
 }

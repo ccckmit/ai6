@@ -33,10 +33,10 @@ console.time('training');
 opt.nnTrain(trainFunc, data, opt.regressionLoss, {
 	iterations: 10000,
 	batchSize: 1,
-	method: opt.sgd({ stepSize: 1, stepSizeDecay: 0.999 }),
-	// method: opt.adagrad({ stepSize: 1 }),
-	// method: opt.rmsprop(),
-	// method: opt.adam(),
+	method: opt.sgd({ stepSize: 1, stepSizeDecay: 0.999 }), // test:pass
+	// method: opt.adagrad({ stepSize: 1 }), // test:pass
+	// method: opt.rmsprop(), // test:pass
+	// method: opt.adam(), // test:pass
 	verbose: false
 });
 console.timeEnd('training');
