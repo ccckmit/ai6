@@ -4,14 +4,14 @@ https://github.com/dritchie/adnn
 
 Javascript neural networks on top of general scalar/tensor reverse-mode automatic differentiation.
 
-## Example 1 : nnXor.js
+## Example 1 : mlpXor.js
 
-file: [nnXor.js](nnXor.js)
+file: [mlpXor.js](mlpXor.js)
 
 run: 
 
 ```
-D:\Dropbox\ai6\book\nn\adnn>node nnXor.js
+D:\Dropbox\ai6\book\nn\adnn>node mlpXor.js
 buildNet
 loadData
 nnTrain
@@ -26,16 +26,16 @@ input={"dims":[2],"length":2,"data":{"0":1,"1":1}} probs={"dims":[2],"length":2,
 "data":{"0":0.9950174687367755,"1":0.004982531263224475}}
 ```
 
-The nnXor.js really learn the xor gate correctly.
+The mlpXor.js really learn the xor gate correctly.
 
-## Example 2 : nnMlp.js
+## Example 2 : mlp.js
 
-file: [nnMlp.js](nnMlp.js)
+file: [mlp.js](mlp.js)
 
 run: 
 
 ```
-D:\Dropbox\ai6\book\nn\adnn>node nnMlp
+D:\Dropbox\ai6\book\nn\adnn>node mlp
 buildNet
 loadData
 nnTrain
@@ -60,7 +60,7 @@ input={"dims":[6],"length":6,"data":{"0":0,"1":0,"2":0.5,"3":0.5,"4":0.5,"5":0}}
 525}}
 ```
 
-The nnMlp.js do not learn output correctly. I don't know why ?
+The mlp.js do not learn output correctly. I don't know why ?
 
 
 

@@ -4,6 +4,8 @@
 
 [Neural Networks, Manifolds, and Topology](http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/)
 
+[神经机器翻译（NMT）相关资料整理](http://www.cnblogs.com/zhbzz2007/p/6276712.html)
+
 ## 用 RNN 做翻譯
 
 [The Unreasonable Effectiveness of Recurrent Neural Networks](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)
