@@ -1,7 +1,7 @@
 // 關鍵：把步伐從 0.01 調到更小的 0.0002 ，然後加多代數 maxLoop 從 100 到 1000
 // 如果 cost 跑到 0.000.... 的話就是對了 (大約有 50% 的機率正確！
 var R = require('./recurrent')
-var hiddenSizes = [10, 10]
+var hiddenSizes = [10, 10] // 把 hiddenSizes 從 [4, 4] 調到 [10, 10] 之後，就幾乎每次都正確了！
 var model = R.initRNN(1, hiddenSizes, 2)
 
 var forward = function (model, trainData, x, y) {
