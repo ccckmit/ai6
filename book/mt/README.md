@@ -60,7 +60,7 @@ iteration 189 error 0.009888661334289672 rate 0.1
 翻譯測試
 
 ```
-$node mtPredict data/mtDogCat.json data/mtDogCat.tst > mtDogCat.out
+$node mtPredict data/mtDogCat.json data/mtDogCat.tst
 
 ===== predict:黑 狗 ====
 (candidates)
