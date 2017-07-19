@@ -1,5 +1,14 @@
 # 簡易的深度學習機器翻譯系統
 
+## 安裝方法
+
+```
+$ git clone https://github.com/ccckmit/ai6.git
+$ cd ai6
+$ npm install
+$ cd book/mt/
+```
+
 ## 執行方法
 
 訓練階段
