@@ -1,70 +1,112 @@
-# 機器翻譯
+# 簡易的深度學習機器翻譯系統
 
-[Hacker's guide to Neural Networks](http://karpathy.github.io/neuralnets/)
+## 執行方法
 
-[Neural Networks, Manifolds, and Topology](http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/)
+訓練階段
 
-[神经机器翻译（NMT）相关资料整理](http://www.cnblogs.com/zhbzz2007/p/6276712.html)
+```
+$ node mtTrain data/mtDogCat.txt data/mtDogCat.json
 
-## 用 RNN 做翻譯
+Lstm.setting.words=["[#start#]","一","隻","狗","=","a","dog","↓","貓","cat","小","pupp
+y","kitten","黑","black","[#end#]"]
+Lstm.setting.w2i={"[#start#]":0,"一":1,"隻":2,"狗":3,"=":4,"a":5,"dog":6,"↓":7,"貓":8,
+"cat":9,"小":10,"puppy":11,"kitten":12,"黑":13,"black":14,"[#end#]":15}
+Network conns 4608 nodes 176
+iteration 1 error 0.14293759569898304 rate 0.1
+iteration 2 error 0.07522323385036442 rate 0.1
+iteration 3 error 0.06458491480240852 rate 0.1
+iteration 4 error 0.057082455586521925 rate 0.1
+...
 
-[The Unreasonable Effectiveness of Recurrent Neural Networks](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)
+iteration 29 error 0.011055015583765218 rate 0.1
+iteration 30 error 0.010528333640657356 rate 0.1
+iteration 31 error 0.010034839611344567 rate 0.1
+iteration 32 error 0.009572102658143247 rate 0.1
+Network conns 17408 nodes 336
+iteration 1 error 0.07548083477579114 rate 0.1
+iteration 2 error 0.05634446473695932 rate 0.1
+iteration 3 error 0.04999356582740921 rate 0.1
+iteration 4 error 0.04600692322456007 rate 0.1
+iteration 5 error 0.04324447514472449 rate 0.1
+iteration 6 error 0.04115684679871102 rate 0.1
+iteration 7 error 0.03948834398834224 rate 0.1
+...
+iteration 185 error 0.011420131758988615 rate 0.1
+iteration 186 error 0.011057974053230687 rate 0.1
+iteration 187 error 0.010670960617216422 rate 0.1
+iteration 188 error 0.01030410947451134 rate 0.1
+iteration 189 error 0.009888661334289672 rate 0.1
+```
 
-[Deep Learning, NLP, and Representations](http://colah.github.io/posts/2014-07-NLP-RNNs-Representations/)
+翻譯測試
 
-[Understanding LSTM Networks](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+```
+$node mtPredict data/mtDogCat.json data/mtDogCat.tst > mtDogCat.out
 
-經典論文： [Learning Phrase Representations using RNN Encoder–Decoder
-for Statistical Machine Translation](https://arxiv.org/pdf/1406.1078v1.pdf) , Cho et al.
-
-[Minimal character-level language model with a Vanilla Recurrent Neural Network, in Python/numpy](https://gist.github.com/karpathy/d4dee566867f8291f086)
-
-想辦法把上面的程式改為 JavaScript
-
-[Machine Learning is Fun Part 5: Language Translation with Deep Learning and the Magic of Sequences](https://medium.com/@ageitgey/machine-learning-is-fun-part-5-language-translation-with-deep-learning-and-the-magic-of-sequences-2ace0acca0aa)
-
-[机器学习原来这么有趣！第五章：Google 翻译背后的黑科技：神经网络和序列到序列学习](https://zhuanlan.zhihu.com/p/24590838)
-
-[Google’s Neural Machine Translation System: Bridging the Gap
-between Human and Machine Translation](https://arxiv.org/pdf/1609.08144.pdf)
-
-[Understanding LSTM Networks](http://colah.github.io/posts/2015-08-Understanding-LSTMs/) , colah's blog
-
-[Tensorflow 官方 Sequence-to -Sequence Models 學習](http://cyruschiu.github.io/2017/02/24/learning-Tensoflow-Seq2Seq-for-translate/)
-
-[TensorFlow Models](https://github.com/tensorflow/models)
-
-RNN 會根據距離指數下降的遺忘事情，但是 LSTM 透過長期記憶來解決這個問題。
-
-[Attention and Augmented Recurrent Neural Networks](http://distill.pub/2016/augmented-rnns/)
-
-
-[http://distill.pub/](http://distill.pub/)
-
-PyTorch : [Translation with a Sequence to Sequence Network and Attention](http://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html)
-
-[Torch implementation of seq2seq machine translation with GRU RNN and attention](https://github.com/spro/torch-seq2seq-attention)
-
-[神经网络机器翻译Neural Machine Translation(2): Attention Mechanism](http://blog.csdn.net/u011414416/article/details/51057789)
-
-[注意力机制（Attention Mechanism）在自然语言处理中的应用](http://blog.csdn.net/jdbc/article/details/52948351) (讚！)
-
-[机器翻译核心技术 分类：神经网络机器翻译](http://www.jiqifanyi.cn/category/neural-machine-translation/)
-
-[Neural Machine Translation Advised by Statistical Machine Translation](http://www.jiqifanyi.cn/2016/12/14/neural-machine-translation-advised-by-statistical-machine-translation/)
-
-神经机器翻译流利但有时翻译不准，统计机器翻译准确但不够流利，两者各有优劣。
-
-## 用 CNN 做機器翻譯
-
-[A novel approach to neural machine translation](https://code.facebook.com/posts/1978007565818999/a-novel-approach-to-neural-machine-translation/)
-
-[Facebook AI Research Sequence-to-Sequence Toolkit](https://github.com/facebookresearch/fairseq)
-
-[Convolutional Sequence to Sequence Learning](https://arxiv.org/abs/1705.03122)
-
-[Why Convolutional Neural Networks are a Great Architecture for Machine Translation](https://medium.com/ai-society/why-convolutional-neural-networks-are-a-great-architecture-for-machine-translation-9258ca1263a8)
-
-[A CONVOLUTIONAL ENCODER MODEL FOR NEURAL MACHINE TRANSLATION](https://michaelauli.github.io/papers/convenc.pdf)
-
-[Conv Nets: A Modular Perspective](http://colah.github.io/posts/2014-07-Conv-Nets-Modular/)
+===== predict:黑 狗 ====
+(candidates)
+6:word=dog p=0.6293747319590483
+11:word=puppy p=0.4925818381156842
+14:word=black p=0.9735647058034166
+黑 狗 => ["black","dog"]
+===== predict:黑 貓 ====
+(candidates)
+9:word=cat p=0.6277232294419235
+12:word=kitten p=0.4100198691268047
+14:word=black p=0.9718996045247326
+黑 貓 => ["black","cat"]
+===== predict:小 黑 狗 ====
+(candidates)
+11:word=puppy p=0.899685281474142
+14:word=black p=0.9593225891303813
+小 黑 狗 => ["black","puppy"]
+===== predict:小 黑 貓 ====
+(candidates)
+12:word=kitten p=0.9029576629614735
+14:word=black p=0.9581542019122061
+小 黑 貓 => ["black","kitten"]
+===== predict:一 隻 小 黑 狗 ====
+(candidates)
+5:word=a p=0.9465430746104574
+11:word=puppy p=0.8404989865335679
+14:word=black p=0.8370177721121996
+一 隻 小 黑 狗 => ["a","black","puppy"]
+===== predict:一 隻 小 黑 貓 ====
+(candidates)
+5:word=a p=0.9467351908196237
+12:word=kitten p=0.8632927435477813
+14:word=black p=0.8332358050625766
+一 隻 小 黑 貓 => ["a","black","kitten"]
+===== predict:一 隻 小 狗 ====
+(candidates)
+5:word=a p=0.9538437108394167
+11:word=puppy p=0.8218844895026884
+一 隻 小 狗 => ["a","puppy"]
+===== predict:一 隻 小 貓 ====
+(candidates)
+5:word=a p=0.9543191669903888
+12:word=kitten p=0.8440008412669697
+一 隻 小 貓 => ["a","kitten"]
+===== predict:一 隻 狗 ====
+(candidates)
+5:word=a p=0.9506442005497401
+6:word=dog p=0.566020170583094
+11:word=puppy p=0.255906735388155
+一 隻 狗 => ["a","dog"]
+===== predict:一 隻 貓 ====
+(candidates)
+5:word=a p=0.9512096209928514
+9:word=cat p=0.6540679175612915
+12:word=kitten p=0.2571352729084012
+一 隻 貓 => ["a","cat"]
+===== predict:小 狗 ====
+(candidates)
+11:word=puppy p=0.8807980214373727
+14:word=black p=0.24660209142124473
+小 狗 => ["puppy"]
+===== predict:小 貓 ====
+(candidates)
+12:word=kitten p=0.8860884111304668
+14:word=black p=0.2415756184834393
+小 貓 => ["kitten"]
+```

@@ -1,5 +1,34 @@
 # 神經網路基礎原理
 
+梯度到底是甚麼？
+
+問題：只能調整一單位距離，走哪個方向下降最快？
+
+f(x,y) => f(x+dx, y+dy)
+
+$$\sqrt{dx^2+dy^2} = df$$
+
+df 很小且固定 (例如 0.0001) 的情況下
+
+請問 dx , dy 應該各是多少，才能讓 f(x,y)-f(x+dx, y+dy) 最大！
+
+答案是往梯度方向調整！
+
+梯度是曲面的切平面上，下降最快的坡面！
+
+(請注意，上述梯度的一單位距離不是坡面的距離，而是 x,y 平面的距離)
+
+範例：
+
+假如 f(x,y) = 3x ，那麼梯度為 (3, 0) ，所以應該往 (-1, 0) 方向調整。(才會下降最快)
+
+假如 f(x,y) = 3x+2y ，那麼梯度為 (3, 2) ，所以應該往 (-3, -2) 的方向調整。
+
+假如 f(x,y) = xy ，那麼梯度為 (y, x) ，假如目前在 (1, 4) 
+
+那麼梯度為 (4, 1) ，所以應該往 (-4, -1) 的方向調整。
+
+
 [Hacker's guide to Neural Networks](http://karpathy.github.io/neuralnets/)
 
 [the data science blog](https://ujjwalkarn.me/blog/)
@@ -11,6 +40,7 @@
 http://colah.github.io/
 
 https://christopherolah.wordpress.com/
+
 
 ## 書
 
@@ -28,6 +58,10 @@ http://www.deeplearningbook.org/
 ## 捲積神經網路
 
 [An Intuitive Explanation of Convolutional Neural Networks](https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/)
+
+-- 目前看到 figure 15
+
+[捲積神经网络的直观解释](http://blog.csdn.net/qq_31780525/article/details/71435620)
 
 [深度學習的捲積神經網路 -- (使用JavaScript / node.js實作)](https://www.slideshare.net/ccckmit/javascript-nodejs)
 

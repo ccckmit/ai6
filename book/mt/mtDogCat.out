@@ -1,0 +1,66 @@
+===== predict:黑 狗 ====
+(candidates)
+6:word=dog p=0.6293747319590483
+11:word=puppy p=0.4925818381156842
+14:word=black p=0.9735647058034166
+黑 狗 => ["black","dog"]
+===== predict:黑 貓 ====
+(candidates)
+9:word=cat p=0.6277232294419235
+12:word=kitten p=0.4100198691268047
+14:word=black p=0.9718996045247326
+黑 貓 => ["black","cat"]
+===== predict:小 黑 狗 ====
+(candidates)
+11:word=puppy p=0.899685281474142
+14:word=black p=0.9593225891303813
+小 黑 狗 => ["black","puppy"]
+===== predict:小 黑 貓 ====
+(candidates)
+12:word=kitten p=0.9029576629614735
+14:word=black p=0.9581542019122061
+小 黑 貓 => ["black","kitten"]
+===== predict:一 隻 小 黑 狗 ====
+(candidates)
+5:word=a p=0.9465430746104574
+11:word=puppy p=0.8404989865335679
+14:word=black p=0.8370177721121996
+一 隻 小 黑 狗 => ["a","black","puppy"]
+===== predict:一 隻 小 黑 貓 ====
+(candidates)
+5:word=a p=0.9467351908196237
+12:word=kitten p=0.8632927435477813
+14:word=black p=0.8332358050625766
+一 隻 小 黑 貓 => ["a","black","kitten"]
+===== predict:一 隻 小 狗 ====
+(candidates)
+5:word=a p=0.9538437108394167
+11:word=puppy p=0.8218844895026884
+一 隻 小 狗 => ["a","puppy"]
+===== predict:一 隻 小 貓 ====
+(candidates)
+5:word=a p=0.9543191669903888
+12:word=kitten p=0.8440008412669697
+一 隻 小 貓 => ["a","kitten"]
+===== predict:一 隻 狗 ====
+(candidates)
+5:word=a p=0.9506442005497401
+6:word=dog p=0.566020170583094
+11:word=puppy p=0.255906735388155
+一 隻 狗 => ["a","dog"]
+===== predict:一 隻 貓 ====
+(candidates)
+5:word=a p=0.9512096209928514
+9:word=cat p=0.6540679175612915
+12:word=kitten p=0.2571352729084012
+一 隻 貓 => ["a","cat"]
+===== predict:小 狗 ====
+(candidates)
+11:word=puppy p=0.8807980214373727
+14:word=black p=0.24660209142124473
+小 狗 => ["puppy"]
+===== predict:小 貓 ====
+(candidates)
+12:word=kitten p=0.8860884111304668
+14:word=black p=0.2415756184834393
+小 貓 => ["kitten"]
